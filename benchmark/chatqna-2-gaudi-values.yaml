@@ -1,0 +1,33 @@
+data-prep:
+  nodeSelector:
+    node-type: opea-benchmark
+  replicaCount: 1
+global:
+  HUGGINGFACEHUB_API_TOKEN: ''
+  modelUseHostPath: /mnt/opea-models
+nodeSelector:
+  node-type: opea-benchmark
+redis-vector-db:
+  nodeSelector:
+    node-type: opea-benchmark
+  replicaCount: 1
+replicaCount: 2
+retriever-usvc:
+  nodeSelector:
+    node-type: opea-benchmark
+  replicaCount: 2
+tei:
+  nodeSelector:
+    node-type: opea-benchmark
+  replicaCount: 2
+teirerank:
+  nodeSelector:
+    node-type: opea-benchmark
+  replicaCount: 1
+tgi:
+  extraCmdArgs:
+  - --max-batch-size
+  - '4'
+  nodeSelector:
+    node-type: opea-benchmark
+  replicaCount: 16
