@@ -184,8 +184,7 @@ def main():
     parser.add_argument(
         "--release-name",
         type=str,
-        default="chatqna",
-        help="The Helm release name created during deployment (default: chatqna).",
+        help="The Helm release name created during deployment.",
     )
     parser.add_argument(
         "--chart-name",
@@ -228,6 +227,9 @@ def main():
 
     args = parser.parse_args()
 
+    if not args.release_name:
+        args.release_name = args.chart_name
+
     # Adjust num-nodes based on node-names if specified
     if args.node_names:
         num_node_names = len(args.node_names)
@@ -256,7 +258,8 @@ def main():
         if not args.hf_token:
             parser.error("--hf-token are required")
         node_selector = {args.label.split("=")[0]: args.label.split("=")[1]}
-        values_file_path = generate_helm_values(
+        result = generate_helm_values(
+            example_type=args.chart_name,
             with_rerank=args.with_rerank,
             num_nodes=args.num_nodes,
             hf_token=args.hf_token,
@@ -264,6 +267,13 @@ def main():
             node_selector=node_selector,
             tune=args.tuned,
         )
+
+        # Check result status
+        if result["status"] == "success":
+            values_file_path = result["filepath"]
+        else:
+            parser.error(f"Failed to generate values.yaml: {result['message']}")
+            return
 
     # Read back the generated YAML file for verification
     with open(values_file_path, "r") as file:
