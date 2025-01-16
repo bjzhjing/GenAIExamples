@@ -89,6 +89,9 @@ def main(yaml_file, target_node=None):
     # Otherwise, process all nodes in the array
     nodes_to_process = [target_node] if target_node is not None else nodes
 
+    # Get the current Python executable
+    python_cmd = sys.executable
+
     for node in nodes_to_process:
         try:
             # Skip if target_node is specified but doesn't match current node
@@ -118,7 +121,7 @@ def main(yaml_file, target_node=None):
                     if i == 0:
                         # First iteration: full deployment
                         cmd = [
-                            'python3', 
+                            python_cmd,
                             'deploy.py', 
                             '--deploy-config', 
                             temp_config_file,
@@ -128,7 +131,7 @@ def main(yaml_file, target_node=None):
                     else:
                         # Subsequent iterations: update services with config change
                         cmd = [
-                            'python3', 
+                            python_cmd,
                             'deploy.py', 
                             '--deploy-config', 
                             temp_config_file,
