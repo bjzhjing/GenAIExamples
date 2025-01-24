@@ -3,32 +3,31 @@ deploy:
   version: 1.1.0
   modelUseHostPath: /mnt/models
   HUGGINGFACEHUB_API_TOKEN: ""
-  node: [1, 2, 4]
+  node: [1, 2, 4, 8]
   namespace: ""
-  cards_per_node: 8
 
   services:
     backend:
-      instance_num: [2, 2, 4]
+      instance_num: [2, 2, 4, 8]
       cores_per_instance: ""
       memory_capacity: ""
 
     teirerank:
       enabled: True
       model_id: ""
-      instance_num: [1, 1, 1]
+      replicaCount: [1, 1, 1, 1]
       cards_per_instance: 1
 
     tei:
       model_id: ""
-      instance_num: [1, 2, 4]
+      replicaCount: [1, 2, 4, 8]
       cores_per_instance: ""
       memory_capacity: ""
 
     llm:
       engine: tgi
       model_id: ""
-      instance_num: [7, 15, 31]
+      replicaCount: [7, 15, 31, 63]
       max_batch_size: [1, 2, 4, 8]
       max_input_length: ""
       max_total_tokens: ""
@@ -37,25 +36,25 @@ deploy:
       cards_per_instance: 1
 
     data-prep:
-      instance_num: [1, 1, 1]
+      replicaCount: [1, 1, 1, 1]
       cores_per_instance: ""
       memory_capacity: ""
 
     retriever-usvc:
-      instance_num: [2, 2, 4]
+      replicaCount: [2, 2, 4, 8]
       cores_per_instance: ""
       memory_capacity: ""
 
     redis-vector-db:
-      instance_num: [1, 1, 1]
+      replicaCount: [1, 1, 1, 1]
       cores_per_instance: ""
       memory_capacity: ""
 
     chatqna-ui:
-      instance_num: [1, 1, 1]
+      replicaCount: [1, 1, 1, 1]
 
     nginx:
-      instance_num: [1, 1, 1]
+      replicaCount: [1, 1, 1, 1]
 
 benchmark:
   llm:

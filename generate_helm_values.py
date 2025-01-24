@@ -21,16 +21,16 @@ def configure_node_selectors(values, node_selector, deploy_config):
 def configure_replica(values, deploy_config):
     """Get replica configuration based on example type and node count."""
     for service_name, config in deploy_config["services"].items():
-        if not config.get("instance_num"):
+        if not config.get("replicaCount"):
             continue
             
         if service_name == "llm":
             engine = config.get("engine", "tgi")
-            values[engine]["replicaCount"] = config["instance_num"]
+            values[engine]["replicaCount"] = config["replicaCount"]
         elif service_name == "backend":
-            values["replicaCount"] = config["instance_num"]
+            values["replicaCount"] = config["replicaCount"]
         else:
-            values[service_name]["replicaCount"] = config["instance_num"]
+            values[service_name]["replicaCount"] = config["replicaCount"]
 
     return values
 

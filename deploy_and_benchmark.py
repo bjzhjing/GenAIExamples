@@ -172,8 +172,6 @@ def main(yaml_file, target_node=None):
                                 chart_dir
                             ]
                             result = subprocess.run(cmd, check=True, capture_output=True, text=True)
-                            #result = subprocess.run(cmd, check=True, text=True)
-                            #print(f"Captured output:\n{result.stdout}")
 
                             match = re.search(r"values_file_path: (\S+)", result.stdout)
                             if match:
